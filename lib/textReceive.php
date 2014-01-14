@@ -1,4 +1,5 @@
 <?php
+	require_once("Services/Twilio.php");
 	require_once("config.php");
 	
 	$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -48,13 +49,27 @@
 		$mysqli->query($q);
 
 		// Get their assassin's phone number and send them a text with their new target
-		$q = "SELECT cell FROM " . $gameID . " WHERE target = '" . $target .  "'";
+		$q = "SELECT * FROM " . $gameID . " WHERE target = '" . $target .  "'";
 		$qtip = $mysqli->query($query);
-		$cell = $qtip->fetch_array(MYSQLI_NUM);
-		$cell = $cell[0];
-		$message = $client->account->sms_messages->create($from, $cell, "Your new target is: " . $target);
-
-		$reply = "Thank you for playing, " . $name;
+		$gameData = $qtip->fetch_array(MYSQLI_ASSOC);
+		$cell = $gameData['cell'];
+		$user = $gameData['user'];
+		
+		if($user == $target) {
+			// Endgame: A user has received themselves as a target; all others must be out
+			// Loop over all players and send them a text
+			$q = "SELECT * FROM " . $gameID . "";
+			$qtip = $mysqli->query($q);
+			
+			while($row = $qtip->fetch_array(MYSQLI_ASSOC)) {
+				$body = "Thank you for playing! The winner is: " . $user;
+				$message = $client->account->sms_messages->create($from, $row['cell'], $body);
+			}
+		} else {
+			// Tell the assassin their new target
+			$message = $client->account->sms_messages->create($from, $cell, "Your new target is: " . $target);
+			$reply = "Thank you for playing, " . $name;
+		}
 	}
 	else {
 	

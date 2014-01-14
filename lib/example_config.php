@@ -1,4 +1,6 @@
 <?php
+	// Fill in the following data and rename the file to config.php
+
 	define("DB_USER", "root");
 	define("DB_PASS", "password");
 	define("DB_HOST", "localhost");

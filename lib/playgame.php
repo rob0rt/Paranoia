@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-require "Services/Twilio.php";
+require_once("Services/Twilio.php");
 require_once("config.php");
 
 // Set up Twilio
