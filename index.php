@@ -1,5 +1,6 @@
 <?php
 	include "lib/checkLogin.php";
+	$failed = ($_GET["login"] == "failed");
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,6 +47,12 @@
 			<h3 id="myModalLabel">Login</h3>
 		</div>
 		<div class="modal-body">
+			<?php if($failed) { ?>
+				<div class="alert alert-error" id="failedLogin">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					Login Failed.
+				</div>
+			<?php } ?>
 			<form class="form-horizontal" method="post" action="lib/login.php">
 				<div class="control-group">
 					<label class="control-label" for="inputUsername">Username</label>
@@ -126,5 +133,8 @@
 	<h1 class="maintitle hidden-phone">Paranoia</h1>
 	<h1 class="maintitle visible-phone" style="font-size:30px">Paranoia</h1>
 	<script>$(window).resize();</script>
+	<?php if($failed) { ?>
+		<script>$('#login').modal('show');</script>
+	<?php } ?>
 </body>
 </html>

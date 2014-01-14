@@ -47,7 +47,7 @@ else {
 		$_SESSION["pass"] = $pass;
 		header("location: " . URL . "dashboard.php");
 	} else {
-		header("location: " . URL);
+		header("location: " . URL . "?login=failed");
 	}
 }
 ?>
