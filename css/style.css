@@ -1,0 +1,35 @@
+.maintitle {
+	position: absolute;
+	text-align: center;
+	font-size: 100px;
+	font-family: 'Montserrat Subrayada', sans-serif;
+	left: 0;
+}
+.dropdown {
+	margin-right: 30px;
+}
+.navbar {
+	margin-bottom: 20px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#gameStart {
+	font-size: 200px;
+	color: red;
+	text-decoration:none;
+	text-align: center;
+	margin-top: 20px;
+	margin-left: 0px;
+}
+#gameStartText {
+	text-align: center;
+	margin-left: 0;
+}
+#stats h3 {
+	margin: 10px 0 0 0;
+}
