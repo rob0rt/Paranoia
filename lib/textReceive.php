@@ -32,6 +32,12 @@
 	}
 		
 	if(strcmp(strtolower($_REQUEST['Body']), "out") == 0) {
+
+		// Set up Twilio
+		$AccountSid = TWILIO_ID;
+		$AuthToken = TWILIO_TOKEN;
+		$from = TWILIO_NUMBER;
+		$client = new Services_Twilio($AccountSid, $AuthToken);
 		
 		// Set the player to out
 		$q = "UPDATE " . $gameID . " SET target='OUT' WHERE player = '" . $name . "'";
@@ -40,7 +46,14 @@
 		// Assign their assassin with the player's target
 		$q = "UPDATE " . $gameID . " SET target='" . $target . "' WHERE target = '" . $name . "'";
 		$mysqli->query($q);
-		
+
+		// Get their assassin's phone number and send them a text with their new target
+		$q = "SELECT cell FROM " . $gameID . " WHERE target = '" . $target .  "'";
+		$qtip = $mysqli->query($query);
+		$cell = $qtip->fetch_array(MYSQLI_NUM);
+		$cell = $cell[0];
+		$message = $client->account->sms_messages->create($from, $cell, "You're new target is: " . $target);
+
 		$reply = "Thank you for playing, " . $name;
 	}
 	else {
@@ -49,7 +62,6 @@
 		$query = "SELECT * FROM games WHERE gameid = '" . $gameID . "'";
 		$qtip = $mysqli->query($query);
 		$gameData = $qtip->fetch_array(MYSQLI_ASSOC);
-		$weapon = $gameData['weapon'];
 		$user = $gameData['user'];
 		
 		// Get the rules short URL
@@ -57,8 +69,7 @@
 		
 		$reply =
 "Your target: " . $target . "
-Weapon: ". $weapon . "
-Rules: " . $shortcut ."
+Rules: " . $rules ."
 When out, reply with OUT";
 	}
 	
