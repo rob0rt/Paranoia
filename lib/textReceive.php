@@ -52,7 +52,7 @@
 		$qtip = $mysqli->query($query);
 		$cell = $qtip->fetch_array(MYSQLI_NUM);
 		$cell = $cell[0];
-		$message = $client->account->sms_messages->create($from, $cell, "You're new target is: " . $target);
+		$message = $client->account->sms_messages->create($from, $cell, "Your new target is: " . $target);
 
 		$reply = "Thank you for playing, " . $name;
 	}
