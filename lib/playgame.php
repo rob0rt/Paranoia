@@ -32,13 +32,7 @@ if(isset($_SESSION["user"]) && $starttime[0] == null) {
 	$qtip = $mysqli->query($query);
 	$gameid = $qtip->fetch_array(MYSQLI_NUM);
 	$gameid = $gameid[0];
-	
-	// Get the weapon type
-	$query = "SELECT weapon FROM games WHERE user = '" . $_SESSION['user'] . "'";
-	$qtip = $mysqli->query($query);
-	$weapon = $qtip->fetch_array(MYSQLI_NUM);
-	$weapon = $weapon[0];
-	
+
 	// Loop over all players and send them a text
 	$query = "SELECT * FROM " . $gameid . "";
 	$qtip = $mysqli->query($query);
@@ -47,7 +41,6 @@ if(isset($_SESSION["user"]) && $starttime[0] == null) {
 		$body = 
 "Welcome to Paranoia.
 Your target: " . $row['target'] . "
-Weapon: ". $weapon . "
 Rules: " . $rules ."
 When out, reply with OUT";
 		$message = $client->account->sms_messages->create($from, $row['cell'], $body);

@@ -5,11 +5,17 @@ include "lib/checkLogin.php";
 
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// Get the start time
+// Get the Rules
 $query = "SELECT rules FROM games WHERE user = '" . $_GET['user'] . "'";
 $qtip = $mysqli->query($query);
 $rules = $qtip->fetch_array(MYSQLI_NUM);
 $rules = $rules[0];
+
+// Get the weapon type
+$query = "SELECT weapon FROM games WHERE user = '" . $_SESSION['user'] . "'";
+$qtip = $mysqli->query($query);
+$weapon = $qtip->fetch_array(MYSQLI_NUM);
+$weapon = $weapon[0];
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,6 +59,11 @@ $rules = $rules[0];
 		</div>
 	</div> 
 	<div class="section container-fluid">
+		<div class="row-fluid">
+			<div class="span6 offset3 well" id="stats">
+				<h1>Weapon: <?php echo nl2br($weapon); ?></h1>
+			</div>
+		</div>
 		<div class="row-fluid">
 			<div class="span6 offset3 well" id="stats">
 				<h1>Rules</h1>
