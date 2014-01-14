@@ -2,29 +2,14 @@
 require_once("lib/config.php");
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// Get the gameID
-$query = "SELECT gameid FROM games WHERE user = '" . $_SESSION['user'] . "'";
+// Get the game data
+$query = "SELECT * FROM games WHERE user = '" . $_SESSION['user'] . "'";
 $qtip = $mysqli->query($query);
-$gameid = $qtip->fetch_array(MYSQLI_NUM);
-$gameid = $gameid[0];
-
-// Get the start time
-$query = "SELECT starttime FROM games WHERE user = '" . $_SESSION['user'] . "'";
-$qtip = $mysqli->query($query);
-$starttime = $qtip->fetch_array(MYSQLI_NUM);
-$starttime = $starttime[0];
-
-// Get the rules
-$query = "SELECT rules FROM games WHERE user = '" . $_SESSION['user'] . "'";
-$qtip = $mysqli->query($query);
-$rules = $qtip->fetch_array(MYSQLI_NUM);
-$rules = $rules[0];
-
-// Get the weapon type
-$query = "SELECT weapon FROM games WHERE user = '" . $_SESSION['user'] . "'";
-$qtip = $mysqli->query($query);
-$weapon = $qtip->fetch_array(MYSQLI_NUM);
-$weapon = $weapon[0];
+$gameData = $qtip->fetch_array(MYSQLI_ASSOC);
+$gameid = $gameData['gameid'];
+$starttime = $gameData['starttime'];
+$rules = $gameData['rules'];
+$weapon = $gameData['weapon'];
 			
 if(isset($_SESSION["user"])) { ?>
 <!DOCTYPE html>

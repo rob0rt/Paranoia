@@ -40,17 +40,12 @@ if(isset($_SESSION["user"])) { ?>
 				<form method="post" action="lib/setRules.php">
 					<h3>Weapon Type:</h3>
 					<?
-					// Get the start time
-					$query = "SELECT rules FROM games WHERE user = '" . $_SESSION['user'] . "'";
+					// Get the game data
+					$query = "SELECT * FROM games WHERE user = '" . $_SESSION['user'] . "'";
 					$qtip = $mysqli->query($query);
-					$rules = $qtip->fetch_array(MYSQLI_NUM);
-					$rules = $rules[0];
-					
-					// Get the start time
-					$query = "SELECT weapon FROM games WHERE user = '" . $_SESSION['user'] . "'";
-					$qtip = $mysqli->query($query);
-					$weapon = $qtip->fetch_array(MYSQLI_NUM);
-					$weapon = $weapon[0];
+					$gameData = $qtip->fetch_array(MYSQLI_ASSOC);
+					$rules = $gameData['rules'];
+					$weapon = $gameData['weapon'];
 					?>
 					<input type="text" data-provide="typeahead" data-items="4" data-source="[&quot;socks&quot;, &quot;water&quot;, &quot;stickers&quot;, &quot;nerf&quot;, &quot;rubber band&quot;, &quot;marker&quot;]" name="weapon" <?php if($weapon != null) { echo "value= '" . $weapon . "'"; } ?> autocomplete="off">
 					<h3>Rules:</h3>
