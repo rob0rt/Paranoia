@@ -6,8 +6,9 @@ function checkLogin() {
 	if(isset($_COOKIE['user'])) {
 		
 		$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-		$user = $_COOKIE['user'];
-		$pass = $_COOKIE['pass'];
+		$user = $mysqli->real_escape_string($_COOKIE['user']);
+		$pass = $mysqli->real_escape_string($_COOKIE['pass']);
+	
 		$temp = "SELECT * FROM users WHERE username='$user' and password='$pass'";
 	
 		$count = 0;
