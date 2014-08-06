@@ -15,7 +15,8 @@ else {
 	
 	$user = $_POST['user']; 
 	$pass = $_POST['pass']; 
-	$pass = md5($pass);
+	$salt = '$2a$10$RobertShouldStoreASeparateSaltWithEachUser';
+	$pass = crypt($pass, $salt);
 	
 	$user = stripslashes($user);
 	$pass = stripslashes($pass);
