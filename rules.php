@@ -6,10 +6,14 @@ include "lib/checkLogin.php";
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // Get the Rules
-$query = "SELECT rules FROM games WHERE user = '" . $_GET['user'] . "'";
-$qtip = $mysqli->query($query);
-$rules = $qtip->fetch_array(MYSQLI_NUM);
-$rules = $rules[0];
+if ($stmt = $mysql->prepare('SELECT rules FROM games WHERE user = ?')) {
+  $stmt->bind_param('s', $_GET['user']);
+  $stmt->execute();
+  $stmt->bind_result($rules);
+  $stmt->fetch();
+  $stmt->close();
+  $rules = $rules[0];
+}
 
 // Get the weapon type
 $query = "SELECT weapon FROM games WHERE user = '" . $_SESSION['user'] . "'";
