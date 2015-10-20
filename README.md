@@ -1,6 +1,12 @@
 Paranoia
 ========
 
+Preface
+------
+Paranoia was my first personal project and was one of my starting points in CS. By my current standards (and standards of any onlookers), this project is pretty awful. It's riddled with every type of security exploit known, and doesn't abide by any sane coding standards.
+
+Thank being said, it was my first project, and has a special place on my Github because of that.
+
 To setup
 --------
 
